@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:incube/pages/Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/splash.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final onboarding = prefs.getBool("onboarding") ?? false;
+  runApp(MyApp(onboarding: onboarding));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool onboarding;
+  const MyApp({Key? key, required this.onboarding}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: onboarding ? Screen() : Splash(),
     );
   }
 }

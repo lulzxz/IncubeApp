@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:incube/component/Responsive.dart';
-import 'package:incube/pages/Homescreen.dart';
 import 'package:incube/pages/Screen.dart';
 
 class Splash extends StatelessWidget {
@@ -14,7 +13,7 @@ class Splash extends StatelessWidget {
     Future.delayed(const Duration(seconds: 4)).then((value) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => const Screen(),
+            builder: (context) => Screen(),
           ),
           (route) => false);
     });

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:incube/component/Responsive.dart';
 import 'package:incube/pages/Dashboard.dart';
 import 'package:incube/pages/Forget.dart';
+import 'package:incube/pages/Navbar.dart';
 import 'package:incube/pages/Register.dart';
 
 class Login extends StatefulWidget {
@@ -141,7 +142,7 @@ class _LoginState extends State<Login> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Dashboard()));
+                                      builder: (context) => const BotNav()));
                             },
                           )),
                       Gap(20),
@@ -281,7 +282,7 @@ class _LoginState extends State<Login> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Dashboard()));
+                                      builder: (context) => const BotNav()));
                             },
                           )),
                       Gap(20),
