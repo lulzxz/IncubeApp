@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarChartSample2 extends StatefulWidget {
-  BarChartSample2({super.key});
+  const BarChartSample2({super.key});
 
   @override
   State<StatefulWidget> createState() => BarChartSample2State();

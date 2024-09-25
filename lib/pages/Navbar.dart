@@ -16,8 +16,8 @@ class BotNav extends StatefulWidget {
 class _BotNavState extends State<BotNav> {
   int currentTab = 0;
   final List<Widget> screens = [
-    Dashboard(),
-    Setting(),
+    const Dashboard(),
+    const Setting(),
   ];
 
   @override
@@ -26,41 +26,43 @@ class _BotNavState extends State<BotNav> {
   }
 
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = Dashboard();
+  Widget currentScreen = const Dashboard();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageStorage(
-        child: currentScreen,
         bucket: bucket,
+        child: currentScreen,
       ),
       floatingActionButton: Responsive(
-        Mobile: Container(
+        Mobile: SizedBox(
           width: 70,
           height: 70,
           child: FloatingActionButton(
-            backgroundColor: currentTab == 1 ? Color(0xFFFFB800) : Colors.white,
-            shape: CircleBorder(),
+            backgroundColor:
+                currentTab == 1 ? const Color(0xFFFFB800) : Colors.white,
+            shape: const CircleBorder(),
             child: Image.asset('assets/Logo3.png'),
             onPressed: () {
               setState(() {
-                currentScreen = Product();
+                currentScreen = const Product();
                 currentTab = 1;
               });
             },
           ),
         ),
-        Tablet: Container(
+        Tablet: SizedBox(
           width: 100,
           height: 100,
           child: FloatingActionButton(
-            backgroundColor: currentTab == 1 ? Color(0xFFFFB800) : Colors.white,
-            shape: CircleBorder(),
+            backgroundColor:
+                currentTab == 1 ? const Color(0xFFFFB800) : Colors.white,
+            shape: const CircleBorder(),
             child: Image.asset('assets/Logo3.png'),
             onPressed: () {
               setState(() {
-                currentScreen = Product();
+                currentScreen = const Product();
                 currentTab = 1;
               });
             },
@@ -68,106 +70,106 @@ class _BotNavState extends State<BotNav> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
-          shape: CircularNotchedRectangle(),
-          notchMargin: 0,
-          child: Responsive(
-            Mobile: Container(
-              height: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          setState(() {
-                            currentScreen = Dashboard();
-                            currentTab = 0;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.dashboard,
-                                color: currentTab == 0
-                                    ? Colors.blue
-                                    : Colors.grey),
-                            Text('Dashboard')
-                          ],
+        bottomNavigationBar: BottomAppBar(
+            color: Colors.white,
+            shape: const CircularNotchedRectangle(),
+            notchMargin: 0,
+            child: Responsive(
+              Mobile: SizedBox(
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              currentScreen = const Dashboard();
+                              currentTab = 0;
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.dashboard,
+                                  color: currentTab == 0
+                                      ? Colors.blue
+                                      : Colors.grey),
+                              const Text('Dashboard')
+                            ],
+                          ),
                         ),
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          setState(() {
-                            currentScreen = Setting();
-                            currentTab = 2;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.settings,
-                                color: currentTab == 2
-                                    ? Colors.blue
-                                    : Colors.grey),
-                            Text('Settings')
-                          ],
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              currentScreen = const Setting();
+                              currentTab = 2;
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.settings,
+                                  color: currentTab == 2
+                                      ? Colors.blue
+                                      : Colors.grey),
+                              const Text('Settings')
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          setState(() {
-                            currentScreen = Report();
-                            currentTab = 3;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.stacked_line_chart,
-                                color: currentTab == 3
-                                    ? Colors.blue
-                                    : Colors.grey),
-                            Text('Report')
-                          ],
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              currentScreen = const Report();
+                              currentTab = 3;
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.stacked_line_chart,
+                                  color: currentTab == 3
+                                      ? Colors.blue
+                                      : Colors.grey),
+                              const Text('Report')
+                            ],
+                          ),
                         ),
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          setState(() {
-                            currentScreen = Profile();
-                            currentTab = 4;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.person_outline_rounded,
-                                color: currentTab == 4
-                                    ? Colors.blue
-                                    : Colors.grey),
-                            Text('Dashboard')
-                          ],
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              currentScreen = const Profile();
+                              currentTab = 4;
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.person_outline_rounded,
+                                  color: currentTab == 4
+                                      ? Colors.blue
+                                      : Colors.grey),
+                              const Text('Profile')
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Tablet: Container(
+            Tablet: SizedBox(
               height: 80,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -180,7 +182,7 @@ class _BotNavState extends State<BotNav> {
                         minWidth: 100,
                         onPressed: () {
                           setState(() {
-                            currentScreen = Dashboard();
+                            currentScreen = const Dashboard();
                             currentTab = 0;
                           });
                         },
@@ -191,7 +193,7 @@ class _BotNavState extends State<BotNav> {
                                 color: currentTab == 0
                                     ? Colors.blue
                                     : Colors.grey),
-                            Text('Dashboard')
+                            const Text('Dashboard')
                           ],
                         ),
                       ),
@@ -199,7 +201,7 @@ class _BotNavState extends State<BotNav> {
                         minWidth: 100,
                         onPressed: () {
                           setState(() {
-                            currentScreen = Setting();
+                            currentScreen = const Setting();
                             currentTab = 0;
                           });
                         },
@@ -210,7 +212,7 @@ class _BotNavState extends State<BotNav> {
                                 color: currentTab == 0
                                     ? Colors.blue
                                     : Colors.grey),
-                            Text('Settings')
+                            const Text('Settings')
                           ],
                         ),
                       ),
@@ -223,7 +225,7 @@ class _BotNavState extends State<BotNav> {
                         minWidth: 100,
                         onPressed: () {
                           setState(() {
-                            currentScreen = Report();
+                            currentScreen = const Report();
                             currentTab = 0;
                           });
                         },
@@ -234,7 +236,7 @@ class _BotNavState extends State<BotNav> {
                                 color: currentTab == 0
                                     ? Colors.blue
                                     : Colors.grey),
-                            Text('Report')
+                            const Text('Report')
                           ],
                         ),
                       ),
@@ -242,7 +244,7 @@ class _BotNavState extends State<BotNav> {
                         minWidth: 100,
                         onPressed: () {
                           setState(() {
-                            currentScreen = Profile();
+                            currentScreen = const Profile();
                             currentTab = 0;
                           });
                         },
@@ -253,7 +255,7 @@ class _BotNavState extends State<BotNav> {
                                 color: currentTab == 0
                                     ? Colors.blue
                                     : Colors.grey),
-                            Text('Dashboard')
+                            const Text('Dashboard')
                           ],
                         ),
                       ),

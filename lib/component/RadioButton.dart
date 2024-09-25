@@ -7,33 +7,33 @@ class SettingItems extends StatefulWidget {
   State<SettingItems> createState() => _SettingItemsState();
 }
 
-enum Options { manual, auto }
-
 class _SettingItemsState extends State<SettingItems> {
-  bool isSelected = true;
+  bool light0 = true;
+  bool light1 = true;
+
+   final MaterialStateProperty<Icon?> thumbIcon =
+      MaterialStateProperty.resolveWith<Icon?>(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check);
+      }
+      return const Icon(Icons.close);
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
-    Options? _Options = Options.manual;
-
-    return Scaffold(
-        body: Row(children: <Widget>[
-      RadioListTile<Options>(
-          value: Options.manual,
-          groupValue: _Options,
-          onChanged: (Options? val) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Switch(
+          value: light0,
+          onChanged: (bool value) {
             setState(() {
-              _Options = val;
+              light0 = value;
             });
-          }),
-      RadioListTile<Options>(
-          value: Options.auto,
-          groupValue: _Options,
-          onChanged: (Options? val) {
-            setState(() {
-              _Options = val;
-            });
-          }),
-    ]));
+          },
+        ),
+     ]);
   }
 }

@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:incube/auth/firebase_auth_service.dart';
 import 'package:incube/component/Responsive.dart';
-import 'package:incube/pages/Dashboard.dart';
 import 'package:incube/pages/Forget.dart';
 import 'package:incube/pages/Navbar.dart';
 import 'package:incube/pages/Register.dart';
@@ -13,17 +14,27 @@ class Login extends StatefulWidget {
 
   @override
   State<Login> createState() => _LoginState();
+  
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   bool passwordVisible = true;
+  bool _isSigning = false;
 
   @override
   void initState() {
     super.initState();
     passwordVisible = false;
+  }
+
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,7 +47,7 @@ class _LoginState extends State<Login> {
               Mobile: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 100),
                   child: Column(
@@ -50,7 +61,7 @@ class _LoginState extends State<Login> {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      Gap(10),
+                      const Gap(10),
                       Text(
                         'To keep connected with us please login with your personal info',
                         style: GoogleFonts.poppins(
@@ -58,33 +69,33 @@ class _LoginState extends State<Login> {
                           color: Colors.black,
                         ),
                       ),
-                      Gap(20),
+                      const Gap(20),
                       Text(
                         'Email',
                         style: GoogleFonts.poppins(
                             fontSize: 14, color: Colors.black),
                       ),
-                      Gap(5),
+                      const Gap(5),
                       TextField(
-                        controller: email,
+                        controller: _emailController,
                         decoration: InputDecoration(
                             hintText: 'Email',
                             border: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                 ),
                                 borderRadius: BorderRadius.circular(8))),
                       ),
-                      Gap(40),
+                      const Gap(40),
                       Text(
                         'Password',
                         style: GoogleFonts.poppins(
                             fontSize: 14, color: Colors.black),
                       ),
-                      Gap(5),
+                      const Gap(5),
                       TextField(
                         obscureText: !passwordVisible,
-                        controller: password,
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8)),
@@ -105,47 +116,57 @@ class _LoginState extends State<Login> {
                         ),
                         textInputAction: TextInputAction.done,
                       ),
-                      Gap(15),
+                      const Gap(15),
                       Container(
                         alignment: Alignment.bottomRight,
                         child: GestureDetector(
                           child: Text(
                             'Forget Password ?',
                             style: GoogleFonts.poppins(
-                                fontSize: 12, color: Color(0xFF2F80ED)),
+                                fontSize: 12, color: const Color(0xFF2F80ED)),
                           ),
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Forget(),
+                                  builder: (context) => const Forget(),
                                 ));
                           },
                         ),
                       ),
-                      Gap(40),
-                      Container(
-                          height: 44,
+                      const Gap(40),
+                      SizedBox(
+                          height: 45,
                           width: 400,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
-                              backgroundColor: Color(0xFFFFB800),
+                              backgroundColor: const Color(0xFFFFB800),
                             ),
                             child: Text(
                               'Log In',
                               style: GoogleFonts.poppins(
-                                  fontSize: 14, color: Color(0xFFFFFFFF)),
+                                  fontSize: 14, color: const Color(0xFFFFFFFF)),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const BotNav()));
+                              _signIn();
                             },
                           )),
-                      Gap(20),
+                      Center(
+                        child: _isSigning
+                            ? CircularProgressIndicator(
+                                color: Colors.blue,
+                              )
+                            : Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                      ),
+                      const Gap(20),
                       Center(
                         child: RichText(
                           textAlign: TextAlign.center,
@@ -157,13 +178,15 @@ class _LoginState extends State<Login> {
                                 TextSpan(
                                     text: ' Register',
                                     style: GoogleFonts.poppins(
-                                        fontSize: 12, color: Color(0xFF2F80ED)),
+                                        fontSize: 12,
+                                        color: const Color(0xFF2F80ED)),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => Register(),
+                                              builder: (context) =>
+                                                  const Register(),
                                             ));
                                       })
                               ]),
@@ -176,7 +199,7 @@ class _LoginState extends State<Login> {
               Tablet: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 100),
                   child: Column(
@@ -190,7 +213,7 @@ class _LoginState extends State<Login> {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      Gap(10),
+                      const Gap(10),
                       Text(
                         'To keep connected with us please login with your personal info',
                         style: GoogleFonts.poppins(
@@ -198,33 +221,33 @@ class _LoginState extends State<Login> {
                           color: Colors.black,
                         ),
                       ),
-                      Gap(20),
+                      const Gap(20),
                       Text(
                         'Email',
                         style: GoogleFonts.poppins(
                             fontSize: 14, color: Colors.black),
                       ),
-                      Gap(5),
+                      const Gap(5),
                       TextField(
-                        controller: email,
+                        controller: _emailController,
                         decoration: InputDecoration(
                             hintText: 'Email',
                             border: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                 ),
                                 borderRadius: BorderRadius.circular(8))),
                       ),
-                      Gap(40),
+                      const Gap(40),
                       Text(
                         'Password',
                         style: GoogleFonts.poppins(
                             fontSize: 14, color: Colors.black),
                       ),
-                      Gap(5),
+                      const Gap(5),
                       TextField(
                         obscureText: !passwordVisible,
-                        controller: password,
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8)),
@@ -245,38 +268,38 @@ class _LoginState extends State<Login> {
                         ),
                         textInputAction: TextInputAction.done,
                       ),
-                      Gap(15),
+                      const Gap(15),
                       Container(
                         alignment: Alignment.bottomRight,
                         child: GestureDetector(
                           child: Text(
                             'Forget Password ?',
                             style: GoogleFonts.poppins(
-                                fontSize: 12, color: Color(0xFF2F80ED)),
+                                fontSize: 12, color: const Color(0xFF2F80ED)),
                           ),
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Forget(),
+                                  builder: (context) => const Forget(),
                                 ));
                           },
                         ),
                       ),
-                      Gap(40),
-                      Container(
+                      const Gap(40),
+                      SizedBox(
                           height: 44,
                           width: 720,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
-                              backgroundColor: Color(0xFFFFB800),
+                              backgroundColor: const Color(0xFFFFB800),
                             ),
                             child: Text(
                               'Log In',
                               style: GoogleFonts.poppins(
-                                  fontSize: 14, color: Color(0xFFFFFFFF)),
+                                  fontSize: 14, color: const Color(0xFFFFFFFF)),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -285,7 +308,7 @@ class _LoginState extends State<Login> {
                                       builder: (context) => const BotNav()));
                             },
                           )),
-                      Gap(20),
+                      const Gap(20),
                       Center(
                         child: RichText(
                           textAlign: TextAlign.center,
@@ -297,13 +320,15 @@ class _LoginState extends State<Login> {
                                 TextSpan(
                                     text: ' Register',
                                     style: GoogleFonts.poppins(
-                                        fontSize: 12, color: Color(0xFF2F80ED)),
+                                        fontSize: 12,
+                                        color: const Color(0xFF2F80ED)),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => Register(),
+                                              builder: (context) =>
+                                                  const Register(),
                                             ));
                                       })
                               ]),
@@ -314,5 +339,27 @@ class _LoginState extends State<Login> {
                 ),
               ),
             )));
+  }
+
+  void _signIn() async {
+    setState(() {
+      _isSigning = true;
+    });
+
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    setState(() {
+      _isSigning = false;
+    });
+
+    if (user != null) {
+      (message: "User is successfully signed in");
+      Navigator.pushNamed(context, "/home");
+    } else {
+      (message: "some error occured");
+    }
   }
 }

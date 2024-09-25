@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:incube/component/RadioButton.dart';
 import 'package:incube/component/Responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gap/gap.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -10,8 +8,6 @@ class Setting extends StatefulWidget {
   @override
   State<Setting> createState() => _SettingState();
 }
-
-enum Options { manual, auto }
 
 class _SettingState extends State<Setting> {
   bool isVisible = true;
@@ -21,262 +17,135 @@ class _SettingState extends State<Setting> {
 
   @override
   Widget build(BuildContext context) {
-    Options? _Options = Options.manual;
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Settings', style: GoogleFonts.poppins(fontSize: 24)),
+        centerTitle: true,
+      ),
       body: Responsive(
-        Mobile: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Center(child: Text('Incube Setting')),
+        Mobile: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'inCube Settings',
+                  style: GoogleFonts.poppins(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            Gap(10),
-            TextButton(
-              onPressed: () {
+            const SizedBox(height: 20),
+            _buildSettingSection(
+              title: 'inCube 1',
+              isVisible: isVisible,
+              onToggle: () {
                 setState(() {
                   isVisible = !isVisible;
                 });
               },
-              child: Text('Incube 1',
-                  style:
-                      GoogleFonts.poppins(fontSize: 14, color: Colors.black)),
-            ),
-            Visibility(
-              visible: !isVisible,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      width: double.infinity,
-                      height: 400,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  isVisible2 = !isVisible2;
-                                });
-                              },
-                              child: Text('Cooling Fan',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 14, color: Colors.black)),
-                            ),
-                            Center(
-                              child: Visibility(
-                                visible: !isVisible2,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Center(
-                                          child: Text('Number of Fan : 2'),
-                                        ),
-                                        Transform.scale(
-                                            scale: .5,
-                                            child: Switch(
-                                                value: isSwitched,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    isSwitched = !isSwitched;
-                                                  });
-                                                })),
-                                      ],
-                                    ),
-                                    Gap(10),
-                                    Row(
-                                      children: <Widget>[
-                                        Text('Timing :'),
-                                        SettingItems()
-                                      ],
-                                    ),
-                                    Gap(36),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Start Temp : '),
-                                            Text('40 Celcius')
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Gap(10),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('End Temp : '),
-                                            Text('30 Celcius')
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                ],
+              child: _buildSubSetting(
+                title: 'Cooling Fan',
+                isVisible: isVisible2,
+                onToggle: () {
+                  setState(() {
+                    isVisible2 = !isVisible2;
+                  });
+                },
               ),
             ),
           ],
         ),
-        Tablet: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+        Tablet: Center(
+          child: Text(
+            'Tablet View - Under Development',
+            style: GoogleFonts.poppins(fontSize: 24),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSettingSection({
+    required String title,
+    required bool isVisible,
+    required VoidCallback onToggle,
+    required Widget child,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextButton(
+          onPressed: onToggle,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.poppins(fontSize: 18, color: Colors.black),
+              ),
+              Icon(
+                isVisible ? Icons.arrow_drop_down : Icons.arrow_right,
+                color: Colors.black,
+              ),
+            ],
+          ),
+        ),
+        if (!isVisible) child,
+      ],
+    );
+  }
+
+  Widget _buildSubSetting({
+    required String title,
+    required bool isVisible,
+    required VoidCallback onToggle,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextButton(
+            onPressed: onToggle,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+                ),
+                Icon(
+                  isVisible ? Icons.arrow_drop_down : Icons.arrow_right,
+                  color: Colors.black,
+                ),
+              ],
+            ),
+          ),
+          if (!isVisible)
             Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Center(child: Text('Incube Setting')),
-            ),
-            Gap(10),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  isVisible = !isVisible;
-                });
-              },
-              child: Text('Incube 1',
-                  style:
-                      GoogleFonts.poppins(fontSize: 14, color: Colors.black)),
-            ),
-            Visibility(
-              visible: !isVisible,
+              padding: const EdgeInsets.only(left: 16.0),
               child: Column(
-                children: <Widget>[
-                  Container(
-                      width: double.infinity,
-                      height: 400,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  isVisible2 = !isVisible2;
-                                });
-                              },
-                              child: Text('Cooling Fan',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 14, color: Colors.black)),
-                            ),
-                            Center(
-                              child: Visibility(
-                                visible: !isVisible2,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Center(
-                                          child: Text('Number of Fan : 2'),
-                                        ),
-                                        Transform.scale(
-                                            scale: .5,
-                                            child: Switch(
-                                                value: isSwitched,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    isSwitched = !isSwitched;
-                                                  });
-                                                })),
-                                      ],
-                                    ),
-                                    Gap(10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text('Timing :'),
-
-                                        // RadioListTile<Options>(
-                                        //     title: Text('Manual'),
-                                        //     value: Options.manual,
-                                        //     groupValue: _optionsItems,
-                                        //     onChanged: (Options? val) {
-                                        //       setState(() {
-                                        //         _optionsItems = val;
-                                        //       });
-                                        //     }),
-                                        // RadioListTile<Options>(
-                                        //     title: Text('Auto'),
-                                        //     value: Options.auto,
-                                        //     groupValue: _optionsItems,
-                                        //     onChanged: (Options? val) {
-                                        //       setState(() {
-                                        //         _optionsItems = val;
-                                        //       });
-                                        //     }),
-
-                                        // Expanded(
-                                        //   child: RadioListTile(
-                                        //       title: Text('Auto'),
-                                        //       value: options[1],
-                                        //       groupValue: currentOptions,
-                                        //       onChanged: (val) {
-                                        //         setState(() {
-                                        //           currentOptions =
-                                        //               val.toString();
-                                        //         });
-                                        //       }),
-                                        // ),
-                                      ],
-                                    ),
-                                    Gap(36),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Start Temp : '),
-                                            Text('40 Celcius')
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Gap(10),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('End Temp : '),
-                                            Text('30 Celcius')
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SwitchListTile(
+                    title: Text(
+                      'Fan Status',
+                      style: GoogleFonts.poppins(fontSize: 14),
+                    ),
+                    value: isSwitched,
+                    onChanged: (value) {
+                      setState(() {
+                        isSwitched = value;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

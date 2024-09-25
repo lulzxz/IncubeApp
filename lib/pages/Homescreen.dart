@@ -30,8 +30,8 @@ class _HomescreenState extends State<Homescreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/logoin.png'),
-                    Gap(50),
-                    Container(
+                    const Gap(50),
+                    SizedBox(
                         height: 44,
                         width: 280,
                         child: ElevatedButton(
@@ -49,13 +49,13 @@ class _HomescreenState extends State<Homescreen> {
                                     builder: (context) => const Login()));
                           },
                         )),
-                    Gap(20),
-                    Container(
+                    const Gap(20),
+                    SizedBox(
                         height: 44,
                         width: 280,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF2F7BED)),
+                              backgroundColor: const Color(0xFF2F7BED)),
                           child: Text(
                             'Register',
                             style: GoogleFonts.poppins(
@@ -83,8 +83,8 @@ class _HomescreenState extends State<Homescreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/logoin.png'),
-                    Gap(50),
-                    Container(
+                    const Gap(50),
+                    SizedBox(
                         height: 44,
                         width: 328,
                         child: ElevatedButton(
@@ -102,13 +102,13 @@ class _HomescreenState extends State<Homescreen> {
                                     builder: (context) => const Login()));
                           },
                         )),
-                    Gap(20),
-                    Container(
+                    const Gap(20),
+                    SizedBox(
                         height: 44,
                         width: 328,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF2F7BED)),
+                              backgroundColor: const Color(0xFF2F7BED)),
                           child: Text(
                             'Register',
                             style: GoogleFonts.poppins(

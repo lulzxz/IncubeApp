@@ -1,37 +1,27 @@
 {
   "project_info": {
-    "project_number": "675108066038",
-    "firebase_url": "https://prokimnas-87b7d-default-rtdb.firebaseio.com",
-    "project_id": "prokimnas-87b7d",
-    "storage_bucket": "prokimnas-87b7d.appspot.com"
+    "project_number": "345297996485",
+    "firebase_url": "https://inkubator-300eb-default-rtdb.firebaseio.com",
+    "project_id": "inkubator-300eb",
+    "storage_bucket": "inkubator-300eb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:675108066038:android:173aff6c596df492fa52d7",
+        "mobilesdk_app_id": "1:345297996485:android:96f1cbfdea0e69aa0cbeac",
         "android_client_info": {
           "package_name": "com.example.incube"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "675108066038-41agqv5eo66kjmjto8cpc0jifatt8vml.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAzatbTgZJJo1gpHIochmjR-MD4Pxc6SrA"
+          "current_key": "AIzaSyCQbxMuTX7fMxE-R_uojAty9D7tQ8Zd7bI"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "675108066038-41agqv5eo66kjmjto8cpc0jifatt8vml.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
